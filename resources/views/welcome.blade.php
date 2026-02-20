@@ -372,7 +372,7 @@
             <div class="container">
                 <div class="banner-flex">
                     <div class="banner-logo-space">
-                        <img src="/images/escudo-icono.png" alt="Logo Chiapas">
+                        <img src="../images/escudo-icono.png" alt="Logo Chiapas">
                     </div>
                     <div class="banner-text">
                         CHIAPAS.GOB.MX
