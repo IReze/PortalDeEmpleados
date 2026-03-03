@@ -1,50 +1,30 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header bg-secondary border-primary-subtle border-info-subtle fs-3 text-white">{{ __('Dashboard') }}</div>
+<div class="container-fluid p-5" style="background-color: #f4f7f6; min-height: 100vh;">
+    <div class="mb-4">
+        <h5 class="mb-0" style="color: #C90166; font-weight: 500;">Panel de Control</h5>
+        <hr style="border-top: 2px solid #C90166; opacity: 1; width: 100%;">
+    </div>
 
-                <div class="card-body">
-                    @if (session('status') === 'two-factor-authentication-enabled')
-                        <div class="alert alert-success" role="alert">
-                            {{ __('Two-factor authentication has been enabled.') }}
-                        </div>
-                    @endif
-                     @if (session('status') === 'two-factor-authentication-disabled')
-                        <div class="alert alert-danger" role="alert">
-                            {{ __('Two-factor authentication has been disabled.') }}
-                        </div>
-                    @endif
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm p-5" style="border-radius: 20px;">
+                <h2 class="fw-bold" style="color: #009887; font-size: 2.5rem;">Bienvenido al Portal</h2>
+                <p class="text-muted fs-5">Gestione su registro de asistencia, Agenda y Avisos.</p>
+            </div>
+        </div>
 
-                    <form action="user/two-factor-authentication" method="POST">
-                        @csrf
-                        @if (auth()->user()->two_factor_secret)
-                        @method('DELETE')
-                        <div class="mb-3">
-                            {!! auth()->user()->twoFactorQrCodeSvg() !!}
-                        </div>
-
-                        <div>
-                            <h4>Recovery Codes</h4> <ul>
-                                @foreach (json_decode(decrypt(auth()->user()->two_factor_recovery_codes)) as $recovery_code)
-                                    <li>{{ $recovery_code }}</li>
-                                 @endforeach
-                            </ul>
-                        </div>
-                            <button class="btn btn-danger">Disable Two-Factor Authentication</button>
-                           
-                        @else
-                            <button class="btn btn-success">Enable Two-Factor Authentication</button>
-                     
-                        @endif
-
-                    </form>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100 p-4" style="border-radius: 20px;">
+                <h4 class="fw-bold mb-4">Avisos o circulares</h4>
+                <div class="text-center py-5">
+                    <p class="text-muted italic">No hay avisos o circulares.</p>
                 </div>
             </div>
         </div>
+
+        
     </div>
 </div>
 @endsection

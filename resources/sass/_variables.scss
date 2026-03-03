@@ -1,7 +1,49 @@
-// Body
-$body-bg: #f8fafc;
+// Variables basadas en la Guía de Estilo CDN Chiapas
+$primary: #009887;
+$secondary: #C90166;
+$danger: #AE1922;
+$dark: #0C0206;
+$body-bg: #f6f6f6;
+$body-color: #0C0206;
 
-// Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
-$font-size-base: 0.9rem;
-$line-height-base: 1.6;
+// Tipografía sugerida por el framework
+$font-family-sans-serif: 'Montserrat', sans-serif;
+
+// ==========================================================================
+// VARIABLES EXTRA - GUÍA DE ESTILO CHIAPAS (CDN)
+// ==========================================================================
+
+// 1. Paleta de Colores Extendida (Oficiales del CDN)
+$chiapas-beige:   #D3C2B4; // Color arena para acentos suaves
+$chiapas-gray:    #585f69; // Gris oscuro para textos secundarios
+$chiapas-light:   #f6f6f6; // Color de fondo oficial
+$white:           #FFFFFF;
+
+// 2. Mapeo de Estados de Bootstrap a Identidad Chiapas
+// Esto hace que las alertas y botones de "éxito" o "error" sigan tu paleta
+$success: #009887; // Usamos el verde institucional para éxito
+$info:    #D3C2B4; // El beige para información neutral
+$warning: #f1c40f; // Amarillo estándar (legibilidad)
+$danger:  #AE1922; // Rojo oficial Chiapas para errores/peligro
+
+// 3. Tipografía Detallada
+// Montserrat es la fuente recomendada para títulos y cuerpo
+$font-family-sans-serif: 'Montserrat', sans-serif;
+$font-weight-light:  300;
+$font-weight-normal: 400;
+$font-weight-bold:   600;
+$font-weight-black:  700;
+
+// 4. Ajustes de Componentes (Para el estilo "No Alargado")
+// Estas variables controlan que las tarjetas y botones no se vean planos
+$border-radius:      6px;
+$border-radius-lg:   8px;
+$border-radius-sm:   4px;
+
+// Sombras sutiles oficiales
+$box-shadow-sm:      0 2px 4px rgba(0,0,0,0.05);
+$box-shadow:         0 4px 8px rgba(0,0,0,0.08);
+
+// 5. Ajustes de Navbar y Espaciado
+$navbar-padding-y:   0.8rem;
+$spacer:             1rem; // Base para márgenes y rellenos (p-3, m-2, etc.)
