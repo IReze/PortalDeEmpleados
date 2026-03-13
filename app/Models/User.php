@@ -24,6 +24,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'curp',
     ];
 
+    // Accessor para la inicial del nombre
+    public function getInitialAttribute()
+    {
+        return strtoupper(substr($this->name, 0, 1));
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

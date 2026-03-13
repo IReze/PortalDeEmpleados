@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\AgendaController; // Importación necesaria
+use App\Http\Controllers\AvisoController; // Importación necesaria
+use App\Http\Controllers\AsistenciaController; // Importación necesaria
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,6 +35,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('profile.edit');
 
     // Rutas adicionales
-    Route::get('/agenda', function () { return view('agenda.index'); })->name('agenda.index');
-    Route::get('/asistencias', function () { return view('asistencias.index'); })->name('asistencias.index');
+   Route::middleware(['auth', 'verified'])->group(function () {
+
+   
+        Route::get('/asistencias', [AsistenciaController::class, 'index'])->name('asistencias.index');
+        Route::get('/avisos', [AvisoController::class, 'index'])->name('avisos.index');
+        Route::get('/avisos/{id}', [AvisoController::class, 'show'])->name('avisos.show');
+        Route::post('/avisos', [AvisoController::class, 'store'])->name('avisos.store');
+        Route::put('/avisos/{id}', [AvisoController::class, 'update'])->name('avisos.update');
+        Route::delete('/avisos/{id}', [AvisoController::class, 'destroy'])->name('avisos.destroy');
+
+
+        // Rutas para el directorio institucional
+        Route::put('/agenda/{id}', [AgendaController::class, 'update'])->name('agenda.update');
+        Route::post('/agenda', [AgendaController::class, 'store'])->name('agenda.store');
+        Route::get('/agenda', [AgendaController::class, 'index'])->name('agenda.index');
+        Route::delete('/agenda/{id}', [AgendaController::class, 'destroy'])->name('agenda.destroy');
+    });
+    
 });

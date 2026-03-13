@@ -1,0 +1,265 @@
+/* =========================================
+   1. VARIABLES Y ESTILOS BASE
+   ========================================= */
+:root {
+    --verde-chiapas: #009887;
+    --guinda-chiapas: #C90166;
+    --dorado-chiapas: #D4A017;
+    --oscuro-chiapas: #4d4d4d;
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+}
+
+#wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* =========================================
+   2. IDENTIDAD INSTITUCIONAL (BANNERS)
+   ========================================= */
+.header-top-black {
+    background-color: #000 !important;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.header-title-white {
+    background-color: #fff;
+    border-bottom: 2px solid var(--verde-chiapas) !important;
+    padding: 15px 0;
+}
+
+/* =========================================
+   3. COMPONENTES DEL DASHBOARD
+   ========================================= */
+.sidebar-main {
+    width: 280px;
+    min-height: 100vh;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar-header {
+    background-color: var(--verde-chiapas);
+    color: #fff;
+}
+
+.navbar-user-custom {
+    border-bottom: 3px solid var(--guinda-chiapas);
+}
+
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    background-color: var(--verde-chiapas);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.1rem;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* =========================================
+   4. CONTROL DE ASISTENCIA (VISTA DE REPORTE)
+   ========================================= */
+.attendance-wrapper { 
+    padding: 20px; 
+    max-width: 100%; 
+} 
+  
+.attendance-card { 
+    background: white; 
+    border-radius: 12px; 
+    padding: 25px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+    border: 1px solid #eee;
+} 
+  
+.attendance-header { 
+    border-left: 5px solid var(--guinda-chiapas);
+    padding-left: 15px;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 25px; 
+} 
+
+/* CAJAS DE RESUMEN (ESTILO FOTO ORIGINAL) */
+.grid-summary { width: 100%; margin-bottom: 25px; } 
+
+.summary-cards-row { 
+    display: flex; 
+    gap: 15px; 
+    flex-wrap: wrap; 
+} 
+
+.summary-card { 
+    flex: 1; 
+    min-width: 150px; 
+    padding: 20px; 
+    border-radius: 10px; 
+    color: white; /* Texto blanco como en la foto */
+    text-align: left; 
+    display: flex; 
+    flex-direction: column;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+} 
+
+.summary-title { 
+    font-size: 0.75rem; 
+    text-transform: uppercase; 
+    font-weight: 700; 
+    margin-bottom: 5px;
+    opacity: 0.9;
+} 
+
+.summary-value { font-size: 2rem; font-weight: 800; display: block; } 
+  
+/* Colores de Cajas Sólidos (Foto 1) */
+.box-normal      { background-color: #2D5A4C; } /* Verde oscuro */
+.box-retardo     { background-color: var(--dorado-chiapas); } 
+.box-falta       { background-color: var(--guinda-chiapas); } 
+.box-justificada { background-color: #1E8424; } /* Verde brillante */
+  
+/* FILTROS Y TABLA */ 
+.filters-section { margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; } 
+.date-group { display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap; } 
+
+.input-field label { font-size: 0.75rem; font-weight: 700; color: var(--oscuro-chiapas); margin-bottom: 5px; } 
+.input-field input[type="date"] { 
+    padding: 8px 12px; border: 2px solid #ddd; 
+    border-radius: 6px; outline: none;
+} 
+.input-field input[type="date"].has-value { 
+    border-color: var(--verde-chiapas); background-color: #e0f2f1; 
+} 
+
+.grid-table { 
+    width: 100%; border: 1px solid #eee; border-radius: 8px; overflow: hidden;
+} 
+.table-custom { width: 100%; border-collapse: collapse; min-width: 900px; } 
+.table-custom thead th { 
+    background-color: #f8f9fa; color: var(--oscuro-chiapas); 
+    font-size: 0.75rem; text-transform: uppercase; padding: 15px;
+    border-bottom: 2px solid #eee; text-align: left;
+} 
+.table-custom td { padding: 12px 15px; border-bottom: 1px solid #f6f6f6; font-size: 0.85rem; } 
+
+/* BADGES DE LA TABLA */
+.badge-status {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: white;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.bg-normal { background-color: var(--verde-chiapas); }
+.bg-retardo-badge { background-color: var(--dorado-chiapas); }
+.bg-falta-badge { background-color: var(--guinda-chiapas); }
+.bg-justificada-badge { background-color: #2196f3; }
+.bg-secondary { background-color: #6c757d; }
+
+/* =========================================
+   5. PÁGINAS DE INVITADO (LOGIN, REGISTRO, WELCOME)
+   ========================================= */
+.full-center-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px); /* Ajuste para centrar entre header y footer */
+    padding: 40px 20px;
+}
+
+.auth-card { 
+    background: white; 
+    border-radius: 12px; 
+    padding: 40px; 
+    width: 100%;
+    max-width: 400px; 
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border-top: 4px solid var(--verde-chiapas);
+}
+
+.user-avatar-circle-lg {
+    width: 100px; height: 100px;
+    background: var(--verde-chiapas);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px; color: white; font-size: 3rem;
+}
+
+.btn-chiapas-primary { 
+    display: block; width: 100%; padding: 12px; 
+    background-color: var(--guinda-chiapas); color: white !important; 
+    text-decoration: none; border-radius: 6px; font-weight: 700;
+    border: none; transition: 0.3s; cursor: pointer;
+}
+.btn-chiapas-primary:hover { background-color: #a30152; }
+
+/* =========================================
+   6. TEXTOS Y FOOTER
+   ========================================= */
+.main-footer {
+    background-color: #222;
+    color: #999;
+    padding: 25px 0;
+    font-size: 13px;
+    border-top: 3px solid var(--guinda-chiapas);
+    text-align: center;
+    width: 100%;
+}
+
+.text-nowrap { white-space: nowrap; }
+.dropdown-item, .nav-link { text-transform: none !important; }
+
+/* Contenedor de la foto de registro */
+.register-photo-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+}
+
+/* El círculo verde del registro */
+.register-avatar-circle {
+    width: 100%;
+    height: 100%;
+    background-color: var(--verde-chiapas);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 3rem; /* Tamaño del icono de persona */
+}
+
+/* EL FIX PARA EL "+" GIGANTE */
+.register-avatar-circle .bi-plus-circle-fill, 
+.register-avatar-circle .bi-plus-circle {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: white;
+    color: var(--verde-chiapas);
+    border-radius: 50%;
+    font-size: 1.2rem !important; /* Forzamos el tamaño pequeño */
+    line-height: 1;
+    border: 2px solid white;
+}

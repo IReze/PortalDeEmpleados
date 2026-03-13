@@ -11,15 +11,14 @@ use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
     /**
-     * Validate and update the given user's profile information.
+     * Valida y actualiza la información del perfil del usuario (Solo Email).
      *
      * @param  array<string, string>  $input
      */
     public function update(User $user, array $input): void
     {
+        // Eliminamos 'name' de la validación porque es readonly en la vista
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-
             'email' => [
                 'required',
                 'string',
@@ -29,26 +28,26 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             ],
         ])->validateWithBag('updateProfileInformation');
 
+        // Si el email cambió y el sistema requiere verificación
         if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
         } else {
+            // Guardamos únicamente el email para evitar errores con los campos protegidos
             $user->forceFill([
-                'name' => $input['name'],
                 'email' => $input['email'],
             ])->save();
         }
     }
 
     /**
-     * Update the given verified user's profile information.
+     * Actualiza la información del usuario verificado.
      *
      * @param  array<string, string>  $input
      */
     protected function updateVerifiedUser(User $user, array $input): void
     {
         $user->forceFill([
-            'name' => $input['name'],
             'email' => $input['email'],
             'email_verified_at' => null,
         ])->save();
