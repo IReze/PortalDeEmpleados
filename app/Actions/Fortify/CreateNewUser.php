@@ -48,11 +48,17 @@ class CreateNewUser implements CreatesNewUsers
         $nombreCompleto = trim("{$empleado->nombre} {$empleado->paterno} {$empleado->materno}");
 
         // 7. Crear el usuario 
-      return User::create([
-    'name' => $nombreCompleto,
-    'email' => $input['email'],
-    'curp' => $curpNormalizada, // <--- Guardamos la CURP real
-    'password' => Hash::make($input['password']),
+        $user = User::create([
+            'name' => $nombreCompleto,
+            'email' => $input['email'],
+            'curp' => $curpNormalizada,
+            'password' => Hash::make($input['password']),
         ]);
+        // 8. ASIGNAR ROL POR DEFECTO (Spatie)
+        // Esto le da acceso automático a 'ver todo' para las asistencias
+        $user->assignRole('usuario_normal');
+
+        // 9. Retornar el usuario ya con su rol
+        return $user;
         }
 }

@@ -9,13 +9,18 @@
             <h4 class="fw-bold mb-0" style="color: var(--guinda-chiapas);">Directorio Institucional</h4>
             <p class="text-muted small mb-0">Gestión de Servidores Públicos - Orden Alfabético</p>
         </div>
-       <button type="button" class="btn text-white px-4 fw-bold shadow-sm" 
+        
+        {{-- 1. BOTÓN NUEVO REGISTRO: Solo para Informática y Admin --}}
+        @can('gestionar agenda')
+        <button type="button" class="btn text-white px-4 fw-bold shadow-sm" 
                 data-bs-toggle="modal" data-bs-target="#nuevoRegistroModal"
                 style="background-color: var(--verde-chiapas); border-radius: 8px;">
             <i class="bi bi-person-plus-fill me-2"></i> Nuevo Registro
         </button>
+        @endcan
     </div>
 
+    {{-- Buscador: Visible para todos --}}
     <div class="card border-0 shadow-sm mb-4" style="border-radius: 15px;">
         <div class="card-body p-4">
             <form action="{{ route('agenda.index') }}" method="GET" class="row g-2">
@@ -43,10 +48,12 @@
                     <tr>
                         <th class="ps-4 py-3 text-muted small fw-bold">NOMBRE</th>
                         <th class="py-3 text-muted small fw-bold">ÁREA</th>
-                        <!-- <th class="py-3 text-muted small fw-bold">CARGO</th> -->
                         <th class="py-3 text-muted small fw-bold text-center">EXT.</th>
                         <th class="py-3 text-muted small fw-bold text-center">PISO</th>
+                        {{-- Ocultamos la cabecera de acciones si no tiene permisos --}}
+                        @can('gestionar agenda')
                         <th class="py-3 text-muted small fw-bold text-end pe-4">ACCIONES</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -65,9 +72,11 @@
                                 {{ $persona->area }}
                             </span>
                         </td>
-                        <!-- <td class="text-muted small">{{ $persona->cargo ?? 'N/A' }}</td> -->
                         <td class="text-center fw-bold" style="color: var(--guinda-chiapas);">{{ $persona->extension ?? '-' }}</td>
                         <td class="text-center text-secondary small">{{ $persona->piso ?? '-' }}</td>
+                        
+                        {{-- 2. ACCIONES DE FILA: Solo para autorizados --}}
+                        @can('gestionar agenda')
                         <td class="text-end pe-4">
                             <div class="btn-group shadow-sm" style="border-radius: 8px; overflow: hidden;">
                                 <button type="button" class="btn btn-sm btn-white border-end" 
@@ -83,10 +92,11 @@
                                 </form>
                             </div>
                         </td>
+                        @endcan
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="text-center py-5 text-muted">No se encontraron resultados para su búsqueda.</td>
+                        <td colspan="5" class="text-center py-5 text-muted">No se encontraron resultados para su búsqueda.</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -101,6 +111,8 @@
     </div>
 </div>
 
+{{-- 3. MODALES DE GESTIÓN: Protegidos por seguridad visual --}}
+@can('gestionar agenda')
 <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 15px; border: none;">
@@ -109,8 +121,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="editForm" method="POST">
-                @csrf
-                @method('PUT')
+                @csrf @method('PUT')
                 <div class="modal-body p-4">
                     <div class="mb-3">
                         <label class="form-label fw-bold small text-muted">Nombre Completo</label>
@@ -120,10 +131,6 @@
                         <label class="form-label fw-bold small text-muted">Área Adscrita</label>
                         <input type="text" name="area" id="edit_area" class="form-control bg-light border-0 shadow-none" required>
                     </div>
-                    <!-- <div class="mb-3">
-                        <label class="form-label fw-bold small text-muted">Cargo</label>
-                        <input type="text" name="cargo" id="edit_cargo" class="form-control bg-light border-0 shadow-none">
-                    </div> -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold small text-muted">Extensión</label>
@@ -143,6 +150,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="nuevoRegistroModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 15px; border: none;">
@@ -161,10 +169,6 @@
                         <label class="form-label fw-bold small text-muted">Área Adscrita</label>
                         <input type="text" name="area" class="form-control bg-light border-0 shadow-none" placeholder="Unidad de Informática" required>
                     </div>
-                    <!-- <div class="mb-3">
-                        <label class="form-label fw-bold small text-muted">Cargo</label>
-                        <input type="text" name="cargo" class="form-control bg-light border-0 shadow-none" placeholder="Jefe de Departamento">
-                    </div> -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label class="form-label fw-bold small text-muted">Extensión</label>
@@ -184,6 +188,8 @@
         </div>
     </div>
 </div>
+@endcan
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

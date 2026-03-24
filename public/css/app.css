@@ -128,10 +128,10 @@ body {
 .summary-value { font-size: 2rem; font-weight: 800; display: block; } 
   
 /* Colores de Cajas Sólidos (Foto 1) */
-.box-normal      { background-color: #2D5A4C; } /* Verde oscuro */
+.box-normal      { background-color: var(--verde-chiapas); } /* Verde oscuro */
 .box-retardo     { background-color: var(--dorado-chiapas); } 
 .box-falta       { background-color: var(--guinda-chiapas); } 
-.box-justificada { background-color: #1E8424; } /* Verde brillante */
+.box-justificada { background-color: #1e6484; } 
   
 /* FILTROS Y TABLA */ 
 .filters-section { margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; } 
@@ -262,4 +262,196 @@ body {
     font-size: 1.2rem !important; /* Forzamos el tamaño pequeño */
     line-height: 1;
     border: 2px solid white;
+}
+/* =========================================
+   6. ESTILOS DE FILTROS Y BOTONES (MEJORADO)
+   ========================================= */
+
+/* Contenedor de input con label arriba */
+.input-field-chiapas {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-field-chiapas label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--oscuro-chiapas);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 2px;
+}
+
+/* Input de fecha estilizado con icono */
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon i {
+    position: absolute;
+    left: 12px;
+    color: var(--verde-chiapas);
+    font-size: 1rem;
+    pointer-events: none; /* Para que no interfiera al hacer clic en el input */
+}
+
+.input-with-icon input[type="date"] {
+    border: 2px solid var(--verde-chiapas) !important;
+    border-radius: 8px;
+    padding: 10px 12px 10px 38px; /* Espacio para el icono a la izquierda */
+    background-color: #e0f2f1; /* Fondo verde muy tenue */
+    color: #333;
+    font-size: 0.9rem;
+    font-weight: 600;
+    outline: none;
+    height: 45px; /* Altura unificada para todos los elementos */
+    transition: 0.3s;
+}
+
+.input-with-icon input[type="date"]:focus {
+    box-shadow: 0 0 0 3px rgba(0, 152, 135, 0.2);
+}
+
+/* BOTÓN FILTRAR (VERDE) */
+.btn-filtrar-chiapas {
+    background-color: var(--verde-chiapas);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn-filtrar-chiapas:hover {
+    background-color: #007d6f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* BOTÓN EXPORTAR PDF (GUINDA) */
+.btn-export-pdf-chiapas {
+    background-color: var(--guinda-chiapas) !important;
+    color: white !important;
+    text-decoration: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    border: none;
+    box-shadow: 0 4px 6px rgba(201, 1, 102, 0.15);
+}
+
+.btn-export-pdf-chiapas:hover {
+    background-color: #a30152 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(201, 1, 102, 0.25);
+    color: white !important;
+}
+
+/* Color de fondo del encabezado del calendario y días seleccionados */
+.flatpickr-calendar {
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
+}
+
+.flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange {
+    background: var(--verde-chiapas) !important;
+    border-color: var(--verde-chiapas) !important;
+}
+
+.flatpickr-months .flatpickr-month {
+    background: var(--verde-chiapas) !important;
+    color: white !important;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    background: var(--verde-chiapas) !important;
+}
+
+.flatpickr-weekday {
+    background: var(--verde-chiapas) !important;
+    color: white !important;
+}
+
+/* Color para el hoy (Today) */
+.flatpickr-day.today {
+    border-color: var(--guinda-chiapas) !important;
+}
+
+.flatpickr-day.today:hover {
+    background: var(--guinda-chiapas) !important;
+    color: white !important;
+}
+
+/* Ajuste para el input "bonito" de Flatpickr */
+.flatpickr-input.form-control.input {
+    padding-left: 40px !important; /* Espacio suficiente para el icono */
+}
+
+/* En caso de que use la clase altInput de Flatpickr */
+.flatpickr-mobile, .datepicker-input, .datepicker.flatpickr-input + input {
+    padding-left: 40px !important;
+}
+
+/* Aseguramos que el contenedor mantenga el icono arriba */
+.input-with-icon i {
+    z-index: 10; /* Para que el icono siempre esté por encima del input */
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* =========================================
+   7. RESPONSIVIDAD (MEDIA QUERIES)
+   ========================================= */
+
+@media (max-width: 992px) {
+    /* El wrapper deja de ser horizontal y se vuelve vertical */
+    #wrapper {
+        flex-direction: column;
+    }
+
+    /* El sidebar ahora ocupa todo el ancho arriba */
+    .sidebar-main {
+        width: 100% !important;
+        min-height: auto !important;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Las tarjetas de asistencia se ponen una debajo de otra */
+    .summary-cards-row {
+        flex-direction: column;
+    }
+
+    .summary-card {
+        width: 100%;
+    }
+
+    /* El contenedor de filtros (fechas, filtrar, pdf) se apila */
+    .d-flex.justify-content-end {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+    
+    .input-field-chiapas, .btn-filtrar-chiapas, .btn-export-pdf-chiapas {
+        width: 100% !important;
+    }
 }

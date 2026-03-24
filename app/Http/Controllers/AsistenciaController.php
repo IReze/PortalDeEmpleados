@@ -30,8 +30,8 @@ class AsistenciaController extends Controller
         } 
   
 // Cambia estas líneas en tu controlador
-    $fecha_inicio = Carbon::parse($request->input('fecha_inicio', $desdeDefault))->format('Y-m-d 00:00:00');
-    $fecha_fin    = Carbon::parse($request->input('fecha_fin', $hoy))->format('Y-m-d 23:59:59');
+    $fecha_inicio = Carbon::parse($request->input('fecha_desde', $desdeDefault))->format('Y-m-d 00:00:00');
+    $fecha_fin    = Carbon::parse($request->input('fecha_hasta', $hoy))->format('Y-m-d 23:59:59');
   
         // 1. Consulta principal (detalle de registros) 
         $query = DB::connection('sqlsrv_reloj') 

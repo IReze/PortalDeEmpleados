@@ -9,10 +9,14 @@
             <h4 class="fw-bold mb-0" style="color: var(--guinda-chiapas);">Avisos y Circulares</h4>
             <p class="text-muted small mb-0">Comunicados oficiales del Estado de Chiapas</p>
         </div>
+        
+        {{-- 1. BOTÓN DE CREACIÓN: Solo visible para quienes pueden 'lanzar avisos' --}}
+        @can('lanzar avisos')
         <button class="btn text-white fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#modalNuevoAviso" 
                 style="background-color: var(--guinda-chiapas); border-radius: 10px;">
             <i class="bi bi-pencil-fill me-2"></i> Redactar Nuevo
         </button>
+        @endcan
     </div>
 
     <div class="row">
@@ -50,13 +54,25 @@
                                     <i class="bi bi-chevron-down text-muted"></i>
                                 </button>
 
-                                <form action="{{ route('avisos.destroy', $aviso->id) }}" method="POST" class="form-eliminar-aviso">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-light text-danger border-0">
-                                        <i class="bi bi-trash3-fill"></i>
+                                {{-- 2. BOTÓN DE ELIMINAR: Solo visible para autorizados --}}
+                                {{-- Acciones de Gestión: Solo para autorizados --}}
+                                @can('lanzar avisos')
+                                <div class="d-flex gap-1">
+                                    {{-- BOTÓN EDITAR --}}
+                                    <button type="button" class="btn btn-sm btn-light text-primary border-0" 
+                                            onclick="openEditAvisoModal({{ json_encode($aviso) }})" title="Editar">
+                                        <i class="bi bi-pencil-square"></i>
                                     </button>
-                                </form>
+
+                                    {{-- BOTÓN ELIMINAR --}}
+                                    <form action="{{ route('avisos.destroy', $aviso->id) }}" method="POST" class="form-eliminar-aviso">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-light text-danger border-0" title="Eliminar">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                @endcan
                             </div>
                         </div>
 
@@ -71,7 +87,7 @@
             @empty
                 <div class="card border-0 shadow-sm p-5 text-center" style="border-radius: 15px;">
                     <i class="bi bi-chat-left-dots text-muted display-1 opacity-25"></i>
-                    <h5 class="mt-3 text-muted fw-bold">No hay comunicados registrados</h5>
+                    <h5 class="mt-3 text-muted fw-bold">No hay Comunicados registrados</h5>
                 </div>
             @endforelse
             
@@ -82,6 +98,8 @@
     </div>
 </div>
 
+{{-- 3. MODAL DE CREACIÓN: También envuelto en @can por seguridad visual --}}
+@can('lanzar avisos')
 <div class="modal fade" id="modalNuevoAviso" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 15px; border: none;">
@@ -92,6 +110,7 @@
             <form action="{{ route('avisos.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body p-4">
+                    {{-- ... Contenido del formulario igual al tuyo ... --}}
                     <div class="mb-3">
                         <label class="form-label fw-bold small text-muted">Clasificación</label>
                         <select name="tipo" class="form-select bg-light border-0 shadow-none" required>
@@ -121,7 +140,48 @@
         </div>
     </div>
 </div>
-
+@endcan
+@can('lanzar avisos')
+<div class="modal fade" id="modalEditarAviso" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 15px; border: none;">
+            <div class="modal-header text-white" style="background-color: var(--verde-chiapas); border-radius: 15px 15px 0 0;">
+                <h5 class="modal-title fw-bold"><i class="bi bi-pencil-square me-2"></i>Editar Comunicado</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="formEditarAviso" method="POST" enctype="multipart/form-data">
+                @csrf @method('PUT')
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Clasificación</label>
+                        <select name="tipo" id="edit_tipo" class="form-select bg-light border-0 shadow-none" required>
+                            <option value="Aviso">Aviso (General)</option>
+                            <option value="Circular">Circular (Oficial)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Título</label>
+                        <input type="text" name="titulo" id="edit_titulo" class="form-control bg-light border-0 shadow-none" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Mensaje</label>
+                        <textarea name="mensaje" id="edit_mensaje" rows="5" class="form-control bg-light border-0 shadow-none" required></textarea>
+                    </div>
+                    <div class="mb-0">
+                        <label class="form-label fw-bold small text-muted">Reemplazar PDF (Opcional)</label>
+                        <input type="file" name="archivo" class="form-control bg-light border-0 shadow-none" accept=".pdf">
+                        <small class="text-muted" style="font-size: 0.7rem;">Dejar vacío para mantener el actual.</small>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-0">
+                    <button type="button" class="btn btn-light fw-bold px-4" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn text-white fw-bold px-4 shadow-sm" style="background-color: var(--verde-chiapas);">Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endcan
 <style>
     .card:hover { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(0,0,0,0.08) !important; }
     .page-link { color: var(--guinda-chiapas); border: none; }
@@ -133,6 +193,19 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    function openEditAvisoModal(aviso) {
+    // Seteamos la ruta dinámica para el UPDATE
+    document.getElementById('formEditarAviso').action = "/avisos/" + aviso.id;
+    
+    // Llenamos los campos
+    document.getElementById('edit_titulo').value = aviso.titulo;
+    document.getElementById('edit_mensaje').value = aviso.mensaje;
+    document.getElementById('edit_tipo').value = aviso.tipo;
+    
+    // Mostramos el modal
+    var editModal = new bootstrap.Modal(document.getElementById('modalEditarAviso'));
+    editModal.show();
+}
     // Confirmación de Eliminación con tus colores institucionales
     $('.form-eliminar-aviso').submit(function(e) {
         e.preventDefault();
@@ -164,4 +237,5 @@
         });
     @endif
 </script>
+
 @endsection

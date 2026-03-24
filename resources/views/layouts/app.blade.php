@@ -11,7 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-</head>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_green.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
+
+</head><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <body class="d-flex flex-column min-vh-100">
 
     <div class="header-top-black px-4">
@@ -43,6 +50,11 @@
                 <a href="{{ route('avisos.index') }}" class="list-group-item list-group-item-action py-3 border-0 fw-bold text-secondary">
                     <i class="bi bi-bell me-3"></i> Avisos o Circulares
                 </a>
+                @if(Auth::user()->hasRole('admin'))
+                <a href="{{ route('usuarios.roles') }}" class="list-group-item list-group-item-action py-3 border-0 fw-bold text-secondary">
+                    <i class="bi bi-person-gear me-3"></i> Panel de Administración
+                </a>
+                @endif
             </div>
         </div>
         @endauth

@@ -50,32 +50,34 @@
   
         {{-- FILTROS --}} 
         <form method="GET" action="{{ route('asistencias.index') }}" class="filters section"> 
-            <div class="date-group"> 
-                <div class="input-field"> 
-                    <label>Desde</label> 
-                    <input type="date" name="fecha_inicio" 
-                           value="{{ $fecha_inicio }}" 
-                           class="{{ !empty($fecha_inicio) ? 'has-value' : '' }}"> 
-                </div> 
-                <div class="input-field"> 
-                    <label>Hasta</label> 
-                    <input type="date" name="fecha_fin" 
-                           value="{{ $fecha_fin }}" 
-                           class="{{ !empty($fecha_fin) ? 'has-value' : '' }}"> 
-                </div> 
-                <div class="input-field"> 
-                    <button type="submit" style="background-color:#009887;color:white; 
-                        border:none;padding:9px 20px;border-radius:6px; 
-                        font-weight:600;cursor:pointer;"> 
-                        Filtrar 
-                    </button> 
-                </div> 
-                <div class="input-field" style="margin-left:auto;"> 
-                    <button type="submit" name="export" value="pdf" class="btn-export"> 
-                        Exportar PDF 
-                    </button> 
-                </div> 
-            </div> 
+          <div class="d-flex justify-content-end align-items-end gap-3 mb-5 mt-3 px-1">
+    
+                <div class="input-field-chiapas">
+                    <label>Desde</label>
+                    <div class="input-with-icon">
+                        <i class="bi bi-calendar3"></i>
+                        <input type="text" name="fecha_desde" class="form-control datepicker" 
+                            placeholder="aaaa-mm-dd" value="{{ request('fecha_desde') }}">
+                    </div>
+                </div>
+
+                <div class="input-field-chiapas">
+                    <label>Hasta</label>
+                    <div class="input-with-icon">
+                        <i class="bi bi-calendar3"></i>
+                        <input type="text" name="fecha_hasta" class="form-control datepicker" 
+                            placeholder="aaaa-mm-dd" value="{{ request('fecha_hasta') }}">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-filtrar-chiapas">
+                    <i class="bi bi-search me-2"></i> Filtrar
+                </button>
+
+                <a href="{{ route('asistencias.pdf', array_merge(request()->all(), ['export' => 'pdf'])) }}" class="btn-export-pdf-chiapas">
+                    <i class="bi bi-file-earmark-pdf-fill me-2"></i> Exportar PDF
+                </a>
+            </div>
         </form> 
   
         {{-- TABLA --}} 
@@ -155,5 +157,30 @@ document.querySelectorAll('input[type="date"]').forEach(function(input) {
     }); 
 }); 
 </script> 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Configuración para el campo DESDE
+        const desdePicker = flatpickr("input[name='fecha_desde']", {
+            locale: "es",
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altInputClass: "form-control input",
+            altFormat: "d F, Y",
+            onChange: function(selectedDates, dateStr) {
+                // Cuando cambia 'Desde', establecemos la fecha mínima de 'Hasta'
+                hastaPicker.set('minDate', dateStr);
+            }
+        });
+
+        // Configuración para el campo HASTA
+        const hastaPicker = flatpickr("input[name='fecha_hasta']", {
+            locale: "es",
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altInputClass: "form-control input",
+            altFormat: "d F, Y",
+        });
+    });
+</script>
   
 @endsection 
