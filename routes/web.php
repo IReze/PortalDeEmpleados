@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AvisoController;
 use App\Http\Controllers\AsistenciaController;
+use App\Http\Controllers\IncidenciaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,6 +46,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['can:ver todo'])->group(function () {
         Route::get('/asistencias', [AsistenciaController::class, 'index'])->name('asistencias.index');
         Route::get('/asistencias/pdf', [AsistenciaController::class, 'index'])->name('asistencias.pdf');
+        Route::get('/incidencias/crear', [IncidenciaController::class, 'create'])->name('incidencias.create');
+        Route::post('/incidencias/guardar', [IncidenciaController::class, 'store'])->name('incidencias.store');
     });
 
     // Avisos y Agenda

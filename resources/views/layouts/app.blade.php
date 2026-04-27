@@ -50,6 +50,10 @@
                 <a href="{{ route('avisos.index') }}" class="list-group-item list-group-item-action py-3 border-0 fw-bold text-secondary">
                     <i class="bi bi-bell me-3"></i> Avisos o Circulares
                 </a>
+                </a>
+                <a href="{{ route('incidencias.create') }}" class="list-group-item list-group-item-action py-3 border-0 fw-bold text-secondary">
+                    <i class="bi bi-exclamation-triangle me-3"></i> Incidencias Laborales
+                </a>
                 @if(Auth::user()->hasRole('admin'))
                 <a href="{{ route('usuarios.roles') }}" class="list-group-item list-group-item-action py-3 border-0 fw-bold text-secondary">
                     <i class="bi bi-person-gear me-3"></i> Panel de Administración
