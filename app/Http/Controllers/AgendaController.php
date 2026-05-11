@@ -22,8 +22,7 @@ class AgendaController extends Controller implements HasMiddleware
     }
 
     /**
-     * Muestra el directorio con búsqueda y orden alfabético.
-     * Público para todos los empleados.
+     * Muestra el directorio con búsqueda dinámica y orden alfabético.
      */
     public function index(Request $request)
     {
@@ -39,11 +38,19 @@ class AgendaController extends Controller implements HasMiddleware
             ->orderBy('nombre', 'asc')
             ->paginate(15);
 
+        // --- LÓGICA PARA BÚSQUEDA DINÁMICA (AJAX) ---
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('agenda.partials.tabla_filas', compact('contactos'))->render(),
+                'pagination' => $contactos->appends(['buscar' => $buscar])->links('pagination::bootstrap-5')->render()
+            ]);
+        }
+
         return view('agenda.index', compact('contactos'));
     }
 
     /**
-     * Creación del nuevo registro (Solo Informática y Admin).
+     * Creación del nuevo registro.
      */
     public function store(Request $request)
     {
@@ -62,7 +69,7 @@ class AgendaController extends Controller implements HasMiddleware
     }
 
     /**
-     * Actualiza los datos de un servidor público (Solo Informática y Admin).
+     * Actualiza los datos de un servidor público.
      */
     public function update(Request $request, $id)
     {
@@ -75,7 +82,6 @@ class AgendaController extends Controller implements HasMiddleware
         ]);
 
         $persona = Directorio::findOrFail($id);
-        
         $persona->update($request->all());
 
         return redirect()->route('agenda.index')
@@ -83,7 +89,7 @@ class AgendaController extends Controller implements HasMiddleware
     }
 
     /**
-     * Elimina un registro del directorio (Solo Informática y Admin).
+     * Elimina un registro del directorio.
      */
     public function destroy($id)
     {
